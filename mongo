@@ -112,3 +112,34 @@ db.products.find({"product_name": "Washing Machine"})
 db.products.find({"category_id": 1, "product_name": "Iron"})
 
 db.products.find({"mealTypes.mealtype_name": 'Breakfast'})
+
+db.zomato.find({condition},{projection}).pretty()
+
+db.zomato.find({},{restaurant_name:1,_id:0}).pretty()
+
+// select * from zomato
+db.zomato.find().pretty()
+
+
+db.zomato.find({},{_id:0}).pretty()
+
+
+db.zomato.find({},{restaurant_name:1,address:1,_id:0}).pretty()
+
+db.zomato.find({},{restaurant_name:1,address:1,_id:0}).limit(5)
+
+db.zomato.find({},{restaurant_name:1,address:1,_id:0}).skip(5).limit(5)
+
+db.zomato.find({},{restaurant_name:1,cost:1,_id:0}).skip(5).limit(5)
+
+db.zomato.find({},{restaurant_name:1,cost:1,_id:0}).skip(5).limit(5).sort({cost:-1})
+
+db.zomato.find({},{restaurant_name:1,cost:1,_id:0}).sort({restaurant_name:1})
+
+db.zomato.find({cost:{$gt:1000}},{restaurant_name:1,cost:1,_id:0})
+
+db.zomato.find({'mealTypes.mealtype_id':3},{restaurant_name:1,'mealTypes.mealtype_name':1,_id:0}).pretty()
+
+db.zomato.find({$and:[{cost:{$gt:500,$lt:1000}}]},{restaurant_name:1,cost:1,_id:0})
+
+db.zomato.find({'mealTypes.mealtype_id':{$in:[3,4]}},{restaurant_name:1,_id:0}).pretty()
