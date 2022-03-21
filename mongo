@@ -143,3 +143,36 @@ db.zomato.find({'mealTypes.mealtype_id':3},{restaurant_name:1,'mealTypes.mealtyp
 db.zomato.find({$and:[{cost:{$gt:500,$lt:1000}}]},{restaurant_name:1,cost:1,_id:0})
 
 db.zomato.find({'mealTypes.mealtype_id':{$in:[3,4]}},{restaurant_name:1,_id:0}).pretty()
+
+///update
+db.collection.update(
+    {condition},
+    {update}
+)
+
+
+db.collectionName.update(
+    {'name':'Amit'},
+    {
+        $set:{
+            "phone":34534,
+            "city":"Delhi"
+        }
+    }
+)
+
+db.collectionName.update(
+    {'name':'Amit'},
+    {
+        $unset:{
+            "phone":34534,
+            "city":"Delhi"
+        }
+    }
+)
+
+///delete all records
+db.test.remove();
+
+// particular records
+db.test.remove({name:'John'});
