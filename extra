@@ -4,7 +4,7 @@ https://git-scm.com/downloads (install)
 https://nodejs.org/en/ (install)
 
 //extension
->chrome (https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh)
+> chrome (https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh)
 
 > vscode
 githistory
@@ -160,3 +160,8 @@ add
 const add = (a,b) => { return a+b }
 
 
+///////
+C > Insert > Post
+R > Read > Get
+U > Update > Put
+D > Delete > Delete
