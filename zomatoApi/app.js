@@ -72,15 +72,14 @@ app.get(`/filter/:mealId`,(req,res) => {
         limit = Number(req.query.limit);
     }
 
-    if(cuisineId && lcost && hcost){
+    if(cuisineId&& lcost && hcost){
         query={
             "cuisines.cuisine_id":cuisineId,
             $and:[{cost:{$gt:lcost,$lt:hcost}}],
             "mealTypes.mealtype_id":mealId
         }
     }
-
-    if(cuisineId){
+    else if(cuisineId){
         query={
             "cuisines.cuisine_id":cuisineId,
             "mealTypes.mealtype_id":mealId
@@ -98,6 +97,34 @@ app.get(`/filter/:mealId`,(req,res) => {
     })
 })
 
+// rest details
+
+/*
+app.get('/details/:collection/:id',(req,res) => {
+    let id = Number(req.params.id);
+    let col = req.params.collection
+    db.collection(col).find({restaurant_id:id}).toArray((err,result) => {
+        if(err) throw err;
+        res.send(result)
+    })
+})*/
+
+
+app.get('/details/:id',(req,res) => {
+    let restId = mongo.ObjectId(req.params.id)
+    db.collection('restaurants').find({_id:restId}).toArray((err,result) => {
+        if(err) throw err;
+        res.send(result)
+    })
+})
+
+app.get('/menu/:id',(req,res) => {
+    let restId = Number(req.params.id)
+    db.collection('menu').find({restaurant_id:restId}).toArray((err,result) => {
+        if(err) throw err;
+        res.send(result)
+    })
+})
 
 
 MongoClient.connect(mongoUrl, (err,client) => {

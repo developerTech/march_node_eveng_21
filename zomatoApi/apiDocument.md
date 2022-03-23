@@ -27,7 +27,11 @@
 
 //page 3
 > Restaurants Details
+(http://localhost:9800/details/618776b162a1816f885956b9)
+(http://localhost:9800/details/restaurants/1)
 > Menu on the basis of restaurants
+(http://localhost:9800/details/menu/1)
+(http://localhost:9800/menu/4)
 > List all Menu
 (http://localhost:9800/list/menu)
 
