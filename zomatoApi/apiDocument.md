@@ -37,13 +37,31 @@
 
 // page 4
 > menu details on basis of item
+Post(localhost:9800/menuItem)
+body([1,2,3])
 > Post the orders
+Post(http://localhost:9800/placeOrder/)
+{
+	"name":"Priya",
+	"email":"priya@gmail.com",
+	"city":"Delhi",
+	"phone":646543764,
+	"menuItem":[4,9,11],
+	"cost":464,
+	"status":"Delivered"
+}
 
 // page5
 > view all orders
 (http://localhost:9800/list/orders)
 > view orders on the basis of emailId
+
 > update order status
+Put(http://localhost:9800/updateOrder)
+{
+	"_id":"623de7bdc5109c7c9485bee8",
+	"status":"Pending"
+
 
 //////////////Your Task/////////////////////
 > Add/Delete/Update

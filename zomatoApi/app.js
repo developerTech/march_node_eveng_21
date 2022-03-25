@@ -8,7 +8,10 @@ const mongoUrl = process.env.mongoUrl;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT || 8700;
+const axios = require('axios')
 var db;
+
+let authKey = "757ddd9a97d365906e7ad80e9dee2fee"
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -21,10 +24,16 @@ app.get('/',(req,res) => {
 
 //location
 app.get('/location',(req,res) => {
-    db.collection('location').find().toArray((err,result) => {
-        if(err) throw err;
-        res.send(result)
-    })
+    let key = req.header('x-access-token')
+    if(key == authKey){
+        db.collection('location').find().toArray((err,result) => {
+            if(err) throw err;
+            res.send(result)
+        })
+    }else{
+        res.send('Unauthencticated User')
+    }
+    
 })
 
 // List Api
@@ -125,6 +134,66 @@ app.get('/menu/:id',(req,res) => {
         res.send(result)
     })
 })
+
+/// menu on the basis for ids
+app.post('/menuItem', (req,res) => {
+    console.log(req.body)
+    if(Array.isArray(req.body)){
+        db.collection('menu').find({menu_id:{$in:req.body}}).toArray((err,result) => {
+            if(err) throw err;
+            res.send(result);
+        })
+    }else{
+        res.send('Please Pass The Array Only');
+    } 
+})
+
+app.post('/placeOrder',(req,res) => {
+    db.collection('orders').insert(req.body,(err,result) => {
+        if(err) throw err;
+        res.send('order Placed')
+    })
+})
+
+app.get('/getOrder',(req,res) => {
+    let menuData = req.query.details
+    let menuDetails;
+    var order;
+    db.collection('orders').find().toArray((err,result) => {
+        if(err) throw err;
+        order = result
+        if(menuData){ 
+            order.map((data) => {
+                let payload = data.menuItem
+                console.log(payload)
+                
+                /*axios.post('/menuItem',payload)
+                        .then(response => {
+                            menuDetails = response.data
+                        })
+    
+                order.menuItem = menuDetails*/
+            })
+            res.send(order)
+        }
+        res.send(result)
+    })
+})
+
+app.put('/updateOrder',(req,res) => {
+    db.collection('orders').updateOne(
+        {_id:mongo.ObjectId(req.body._id)},
+        {
+            $set:{
+                "status":req.body.status
+            }
+        },(err,result) => {
+            if(err) throw err;
+            res.status(200).send('Status Updated')
+        }
+    )
+})
+
 
 
 MongoClient.connect(mongoUrl, (err,client) => {
