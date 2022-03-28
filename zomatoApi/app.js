@@ -194,7 +194,123 @@ app.put('/updateOrder',(req,res) => {
     )
 })
 
+/////insert Data
+app.post('/addData',(req,res) => {
+    let col = req.body.collection;
+    //let data = req.body.data
+    let {data} = req.body
+    db.collection(col).insert(data,(err,result) => {
+        if(err) throw err;
+        res.send(`Data for ${col} is added`)
+    })
+})
 
+
+/////delete Data
+app.delete('/removeData',(req,res) => {
+    let col = req.body.collection;
+    let id = mongo.ObjectId(req.body.data._id)
+    db.collection(col).find({_id:id}).toArray((err,result) => {
+        if(result.length != 0){
+            db.collection(col).deleteOne({_id:id},(err,result) => {
+                if(err) throw err;
+                res.send(`Data form ${col} is removed`)
+            })
+        }else{
+            res.send(`Not Record found in ${col} to remove`)
+        }
+    })
+})
+/*
+{
+	"collection":"location",
+	"data":{
+        "_id": "6241df854b4a7a4d14c4893e",
+        "query":{"location_name":"Test Location, Panipat"}
+    
+	}
+}
+*/
+
+/////update Data
+app.put('/updateData',(req,res) => {
+    let col = req.body.collection;
+    let id = mongo.ObjectId(req.body.data._id)
+    let query = req.body.data.query;
+    
+    db.collection(col).find({_id:id}).toArray((err,result) => {
+        if(result.length != 0){
+            db.collection(col).updateOne(
+                {_id:id},
+                {
+                    $set:query
+                },(err,result) => {
+                if(err) throw err;
+                res.send(`Data form ${col} is updated`)
+            })
+        }else{
+            res.send(`Not Record found in ${col} to update`)
+        }
+    })
+})
+
+app.post('/makeRequest',(req,res) => {
+    let col = req.body.collection;
+    let action = req.body.action
+    if(action === "ADD"){
+        let {data} = req.body
+        db.collection(col).insert(data,(err,result) => {
+            if(err) throw err;
+            res.send(`Data for ${col} is added`)
+        })
+    }else if(action === "GET"){
+        db.collection(col).find().toArray((err,result) => {
+            if(err) throw err;
+            res.send(result)
+        })
+    }else if(action === "UPDATE"){
+        let id = mongo.ObjectId(req.body.data._id)
+        let query = req.body.data.query;
+        
+        db.collection(col).find({_id:id}).toArray((err,result) => {
+            if(result.length != 0){
+                db.collection(col).updateOne(
+                    {_id:id},
+                    {
+                        $set:query
+                    },(err,result) => {
+                    if(err) throw err;
+                    res.send(`Data form ${col} is updated`)
+                })
+            }else{
+                res.send(`Not Record found in ${col} to update`)
+            }
+        })
+    }else if(action === "DELETE"){
+        let id = mongo.ObjectId(req.body.data._id)
+        db.collection(col).find({_id:id}).toArray((err,result) => {
+            if(result.length != 0){
+                db.collection(col).deleteOne({_id:id},(err,result) => {
+                    if(err) throw err;
+                    res.send(`Data form ${col} is removed`)
+                })
+            }else{
+                res.send(`Not Record found in ${col} to remove`)
+            }
+        }) 
+    }   
+})
+/*
+{
+	"collection":"location",
+	"action":"GET",
+	"data":{
+        "_id": "6241df854b4a7a4d14c4893e",
+        "query":{"location_name":"Test Location, Panipat"}
+    
+	}
+}
+*/
 
 MongoClient.connect(mongoUrl, (err,client) => {
     if(err) console.log('Error While Connecting');
