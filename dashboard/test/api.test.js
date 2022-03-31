@@ -4,7 +4,7 @@ let expect = chai.expect
 chai.use(chaiHttp);
 
 describe("Testing Api" ,() => {
-    it("Should return 2000 for health Check",(done) => {
+    it("Should return 200 for health Check",(done) => {
         chai.request(`http://localhost:9700`)
         .get('/health')
         .then((res) => {
@@ -16,3 +16,4 @@ describe("Testing Api" ,() => {
         })
     })
 })
+
