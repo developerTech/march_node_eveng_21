@@ -1,1 +1,19 @@
 git clone https://github.com/Aakashdeveloper/mar_node_eveng_22
+
+//firsttime from new folder
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/Aakashdeveloper/mrachtest.git
+git push -u origin master
+
+git status
+
+
+/// next time from same folder
+git add .
+git commit -m "first commit"
+git push
+
+////
+git checkout -b branchname
