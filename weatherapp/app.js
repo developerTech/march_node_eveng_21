@@ -1,24 +1,17 @@
 import express from 'express';
 import request from 'request';
-import chalk from 'chalk';
-import {URL} from 'url'
-
 const app = express();
 const port = process.env.PORT || 8920;
 
-const log = console.log;
-
-const __dirname = decodeURI(new URL(".", import.meta.url).pathname);
-app.use(express.static(__dirname+ '/public'));
-
+// app.use(express.static(__dirname+ '/public'));
 app.set('views','./src/views');
 app.set('view engine','ejs');
 
-app.get('/weather', (req, res) =>{
+app.get('/weather', function(req, res){
     let city = req.query.city ? req.query.city:'Delhi'
     let url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&mode=json&units=metric&cnt=10&appid=fbf712a5a83d7305c3cda4ca8fe7ef29`;
     // calling api
-    request(url, (err, apiResponse) => {
+    request(url, function(err, apiResponse) {
         if(err) throw err;
         const output = JSON.parse(apiResponse.body);
         //res.send(output)
@@ -27,8 +20,7 @@ app.get('/weather', (req, res) =>{
 })
 
 
-app.listen(port,(err) => {
+app.listen(port,function(err){
     if(err) throw err;
-    ///log(chalk.blue('Hello') + ' World' + chalk.red('!'));
-   console.log(chalk.blue(`Server is running on port ${port}`));
+    console.log(`Server is running on port ${port}`)
 })
