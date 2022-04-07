@@ -36,16 +36,15 @@ Pm2
 Docker
 Nginx
 Login/Logout(JWT)
-////////////////////
-
 Oauth(with github)
+TelegramChat
+////////////////////
 Oauth(with google)
 GraphQl API
 NodeJs with postgres
 Paytm-Payment
 Email With Node(sendgird)(https://app.sendgrid.com/)
 Chatapp
-TelegramChat
 FIREBASE
 --------NOT---------
 React/Angular
