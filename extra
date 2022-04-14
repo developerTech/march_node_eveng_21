@@ -40,10 +40,9 @@ Oauth(with github)
 TelegramChat
 Oauth(with google)
 GraphQl API
-////////////////////
 NodeJs with postgres
 FIREBASE
-
+////////////////////
 Paytm-Payment
 Email With Node(sendgird)(https://app.sendgrid.com/)
 Chatapp
@@ -221,3 +220,4 @@ mutation{
     id
   }
 }
+
